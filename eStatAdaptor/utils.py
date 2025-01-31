@@ -21,6 +21,33 @@ def fetch_stats_data(app_id, stats_data_id):
         return response.json()
     except requests.exceptions.RequestException as e:
         raise RuntimeError(f"Error fetching data: {e}")
+    
+def fetch_stats_list(app_id, search_word, survey_year=None, limit=10):
+    """
+    e-Stat APIを使用して統計帳票を検索する関数。
+
+    :param app_id: e-Stat APIのアプリケーションID
+    :param search_word: 検索キーワード
+    :param survey_year: 調査年度（オプション, 例: "2023"）
+    :param limit: 取得件数の上限（デフォルト: 10）
+    :return: APIから取得したデータ（辞書形式）
+    """
+    url = "https://api.e-stat.go.jp/rest/3.0/app/json/getStatsList"
+    params = {
+        "appId": app_id,
+        "searchWord": search_word,
+        "limit": limit
+    }
+    
+    if survey_year:
+        params["surveyYears"] = survey_year
+
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()  # HTTPエラーがある場合は例外を発生
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"Error fetching statistics list: {e}")
 
 def json_to_dataframe(json_data):
     """

@@ -37,7 +37,29 @@ e-Stat APIのアプリケーションIDを指定してセッションを初期�
 session = Session(api_key="your_api_key_here")
 ```
 
-### 3. データの取得
+### 3. 統計データIDの検索
+
+検索キーワードを指定して統計データIDを検索します。取得データはPandas DataFrameとして返されます。
+
+```
+search_word = "人口動態"
+df_reports = session.searchReports(search_word)
+
+print(df_reports)
+```
+
+検索時のオプションは以下の通りです：
+
+| 引数名         | 型      | 必須 | 説明 |
+|--------------|--------|----|--------------------------------|
+| `search_word` | `str`  | ✅  | 検索キーワード（統計名、調査名など） |
+| `survey_year` | `str`  | ❌  | 調査年度（例: `"2023"`、指定なしの場合は全期間） |
+| `limit`       | `int`  | ❌  | 取得件数の上限（デフォルト: `10`） |
+| `show_full`   | `bool` | ❌  | `True` にすると、詳細な情報を含む DataFrame を返す |
+
+
+
+### 4. データの取得
 
 統計データID (`stats_data_id`) を指定してデータを取得します。取得データはPandas DataFrameとして返されます。
 
