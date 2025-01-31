@@ -41,7 +41,7 @@ session = Session(api_key="your_api_key_here")
 
 検索キーワードを指定して統計データIDを検索します。取得データはPandas DataFrameとして返されます。
 
-```
+```python
 search_word = "人口動態"
 df_reports = session.searchReports(search_word)
 
